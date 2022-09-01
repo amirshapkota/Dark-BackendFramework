@@ -1,4 +1,15 @@
 import 'package:sqlite3/sqlite3.dart';
+import "config.dart" as config;
+
+dynamic setup_database()
+{
+  if (config.connection == "sqlite")
+  {
+    return sqlite3.open(config.database);
+  } else {
+    throw Exception("This database hasn't been configured in this framework");
+  }
+}
 
 enum DataType 
 {
@@ -6,7 +17,6 @@ enum DataType
   VARCHAR,
 
 }
-
 extension DataTypeExtension on DataType 
 {
 
@@ -90,7 +100,7 @@ class Model
   List<Column> fields = [];
   List<String> rows = [];
   String name = "";
-  static var db = sqlite3.open("database.db");
+  static var db = setup_database();
 
   Model(this.name, this.fields){
     fields.forEach((element) {
