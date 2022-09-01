@@ -33,9 +33,9 @@ void main(List<String> args) async {
       request.response.write("404 NOT FOUND");
     }
 
-    print('[ Server ] $method $ip');
-
     request.response.close();
+
+    print('[ Server ] $method $ip');
   });
 
 }

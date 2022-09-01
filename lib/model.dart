@@ -21,8 +21,8 @@ enum DataType
   BIGINTEGER,
   DATE,
   BLOB
-
 }
+
 extension DataTypeExtension on DataType 
 {
 

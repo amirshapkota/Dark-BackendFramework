@@ -11,5 +11,6 @@ final Model book = Model("books", [
 ]);
 
 final List<Model> models = [
-  user
+  user,
+  book
 ];
