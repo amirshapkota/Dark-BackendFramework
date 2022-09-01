@@ -4,6 +4,12 @@ enum DataType
 {
   INTEGER,
   VARCHAR,
+  TEXT,
+  BOOL,
+  DATETIME,
+  BIGINTEGER,
+  DATE,
+  BLOB
 
 }
 
@@ -20,6 +26,24 @@ extension DataTypeExtension on DataType
       case DataType.VARCHAR:
         return "varchar";
 
+      case DataType.TEXT:
+        return "text";
+
+      case DataType.BOOL:
+        return "bool";
+      
+      case DataType.DATETIME:
+        return "datetime";
+      
+      case DataType.BIGINTEGER:
+        return "bigint";
+      
+      case DataType.DATE:
+        return "date";
+      
+      case DataType.BLOB:
+        return "blob";
+
       default:
         return "null";
 
@@ -27,6 +51,7 @@ extension DataTypeExtension on DataType
   }
 
 }
+
 
 class Column
 {
