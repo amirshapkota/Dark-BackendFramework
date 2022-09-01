@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:main/route.dart';
+import 'package:dark/route.dart';
 import "../src/routes.dart";
 
 void main(List<String> args) async {
@@ -9,7 +9,7 @@ void main(List<String> args) async {
 
   var server = await HttpServer.bind(InternetAddress.anyIPv6, 8000);
 
-  print("[ Server ] Running at port 8000");
+  print("[ Dark ] Running at port 8000");
 
   await server.forEach((HttpRequest request) {
     var method = request.method;

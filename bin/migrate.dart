@@ -1,6 +1,9 @@
 import "../src/models.dart";
 
-void main(List<String> args) {
+void main(List<String> args) async {
+
+  print("[ Dark ] Migarting all models");
+
   
   for (var model in models)
   {
