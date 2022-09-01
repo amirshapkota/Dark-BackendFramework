@@ -38,6 +38,51 @@ class Column
 
 }
 
+class Row {
+
+  Map _values = {};
+  String table = "";
+  var db = Model.db;
+
+  Row(this.table, this._values);
+
+  dynamic getValue(String name)
+  {
+    return _values[name];
+  }
+
+  void delete()
+  {
+    var id = _values["id"];
+    String query = "DELETE FROM $table WHERE id = $id;";
+
+    db.execute(query);
+
+  }
+
+  void update(Map data)
+  {
+    String query = "UPDATE $table SET ";
+    data.forEach((key, value) {
+      if (_values.keys.contains(key)){
+        query += "$key = $value";
+        _values[key] = value;
+      }else {
+        throw Exception("$key doesn't exist");
+      }
+    });
+    var id = _values["id"];
+    query += "WHERE id = $id;";
+    db.execute(query);
+  }
+
+  toMap(){
+    return this._values;
+  }
+
+
+}
+
 
 class Model
 {
@@ -56,7 +101,7 @@ class Model
   String compile()
   {
 
-    String query ='CREATE TABLE $name (';
+    String query ='CREATE TABLE $name ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,';
 
     for (var item in fields)
     {
@@ -76,7 +121,7 @@ class Model
   }
 
 
-  void migrate({force = false}) 
+  void migrate({force = false}) async
   {
     final String query = compile();
     try {
@@ -93,10 +138,14 @@ class Model
 
   List getAll()
   {
+    List<Row> rows = [];
     final String query = "SELECT * FROM $name";
     try {
       final ResultSet result = db.select(query);
-      return result.toList();
+      result.toList().forEach((element) {
+        rows.add(Row(name, element));
+      });
+      return rows;
     } on Exception {
       throw Exception("Table not created, please migrate and run");
     }
@@ -108,7 +157,7 @@ class Model
 
     values.forEach((key, value) {
       if (!rows.contains(key)){
-        throw Exception('Column in $name Doesn\'t Exist');
+        throw Exception('Column $key in $name Doesn\'t Exist');
       }
     });
 
@@ -139,12 +188,12 @@ class Model
     
   }
 
-  Map getOne(int id)
+  Row getOne(int id)
   {
     String query = "SELECT * FROM $name WHERE id = $id LIMIT 1;";
     try {
       var list = db.select(query).toList();
-      return list.length != 0 ? list[0] : {};
+      return list.length != 0 ? Row(name, list[0]) : Row("", {});
     } on Exception {
       throw Exception("Table not created, please migrate and run");
     }
@@ -153,3 +202,4 @@ class Model
   }
 
 }
+
