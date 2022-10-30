@@ -6,8 +6,7 @@ dynamic setup_database()
   if (config.connection == "sqlite")
   {
     return sqlite3.open(config.database);
-  } else
-   {
+  } else {
     throw Exception("This database hasn't been configured in this framework");
   }
 }
