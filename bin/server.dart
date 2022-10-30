@@ -1,15 +1,16 @@
 import 'dart:io';
-
-import 'package:main/route.dart';
+import 'package:dark/route.dart';
 import "../src/routes.dart";
+import '../lib/config.dart' as config;
 
 void main(List<String> args) async {
 
   create_routes();
+  final int PORT = config.PORT;
 
-  var server = await HttpServer.bind(InternetAddress.anyIPv6, 8000);
+  var server = await HttpServer.bind(InternetAddress.anyIPv6, PORT);
 
-  print("[ Server ] Running at port 8000");
+  print("[ Dark ] Running at port $PORT");
 
   await server.forEach((HttpRequest request) {
     var method = request.method;
@@ -32,11 +33,9 @@ void main(List<String> args) async {
       request.response.write("404 NOT FOUND");
     }
 
-    print('[ Server ] $method $ip');
-
-
-
     request.response.close();
+
+    print('[ Server ] $method $ip');
   });
 
 }

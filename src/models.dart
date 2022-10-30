@@ -1,17 +1,14 @@
-import 'package:main/model.dart';
+import 'package:dark/model.dart';
 
 final Model user = Model("users", [
   Column("name", DataType.VARCHAR),
-  Column("age", DataType.INTEGER),
-  Column("phone", DataType.VARCHAR)
+  Column("age", DataType.INTEGER)
 ]);
 
 final Model book = Model("books", [
-  Column("name", DataType.VARCHAR),
-  Column("pages", DataType.VARCHAR),
-  Column("author_name", DataType.VARCHAR)
+  Column("name", DataType.INTEGER),
+  Column("pages", DataType.INTEGER)
 ]);
-
 
 final List<Model> models = [
   user,
